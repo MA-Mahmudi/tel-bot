@@ -11,6 +11,8 @@ import (
 var isIniInitOnce = false
 var IniData *ini.File
 
+/////////// nodemon --exec go run main.go --signal SIGTERM
+
 func main() {
 	pref := telegramBot.Settings{
 		Token:  IniGet("", "TOKEN"),
@@ -24,11 +26,21 @@ func main() {
 	}
 
 	bot.Handle("/add_receiver", func(context telegramBot.Context) error {
-		msg := context.Send("Send me the userIds you want to add to the list.\n" +
-			"The format Should be as following:\n" +
+		msg := context.Send("Enter the userId(s) you want to add to the list.\n" +
+			"The format should be as following:\n" +
 			"Id1:name1\n" +
 			"Id2:name2\n\n" +
 			"It's better for name to not contain '-'.")
+
+		println(msg)
+		return msg
+	})
+
+	bot.Handle("/remove_receiver", func(context telegramBot.Context) error {
+		msg := context.Send("Enter the userId(s) you want to remove from the list.\n" +
+			"The format should be as following:\n\n" +
+			"Id1-Id2-Id3")
+
 		println(msg)
 		return msg
 	})
