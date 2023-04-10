@@ -4,6 +4,7 @@ import (
 	"gopkg.in/ini.v1"
 	telegramBot "gopkg.in/telebot.v3"
 	"log"
+	"tel-mtproto/admin-bot"
 	"tel-mtproto/common"
 	"time"
 )
@@ -25,23 +26,24 @@ func main() {
 		return
 	}
 
-	bot.Handle("/add_receiver", func(context telegramBot.Context) error {
-		msg := context.Send("Enter the userId(s) you want to add to the list.\n" +
-			"The format should be as following:\n" +
-			"Id1:name1\n" +
-			"Id2:name2\n\n" +
-			"It's better for name to not contain '-'.")
-
-		println(msg)
-		return msg
+	bot.Handle("/start", func(context telegramBot.Context) error {
+		welcomeMsg := context.Send("This is your admin bot. Enjoy using it!")
+		return welcomeMsg
 	})
+
+	admin_bot.AddReceiver(bot)
 
 	bot.Handle("/remove_receiver", func(context telegramBot.Context) error {
 		msg := context.Send("Enter the userId(s) you want to remove from the list.\n" +
 			"The format should be as following:\n\n" +
 			"Id1-Id2-Id3")
 
-		println(msg)
+		return msg
+	})
+
+	bot.Handle("/custom_text", func(context telegramBot.Context) error {
+		msg := context.Send("Send the text you want to send to the receivers.")
+
 		return msg
 	})
 
