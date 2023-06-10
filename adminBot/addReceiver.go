@@ -1,15 +1,16 @@
 package adminBot
 
 import (
+	"database/sql"
+	_ "github.com/mattn/go-sqlite3"
 	telegramBot "gopkg.in/telebot.v3"
 )
 
 func AddReceiver(bot *telegramBot.Bot) {
 
-	//ReceiversList := [...]struct {
-	//	Id   string
-	//	Name string
-	//}{{}}
+	database, _ := sql.Open("sqlite3", "./database/receivers.db")
+	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, userId TEXT, name TEXT)")
+	statement.Exec()
 
 	bot.Handle("/add_receiver", func(context telegramBot.Context) error {
 		msg := context.Send(

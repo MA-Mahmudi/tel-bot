@@ -4,7 +4,7 @@ import (
 	"gopkg.in/ini.v1"
 	telegramBot "gopkg.in/telebot.v3"
 	"log"
-	adminBot "tel-mtproto/adminBot"
+	"tel-mtproto/adminBot"
 	"tel-mtproto/common"
 	"time"
 )
@@ -45,7 +45,7 @@ func IniSetup() {
 	if !isIniInitOnce {
 		var err error
 		IniData, err = ini.Load("config.ini")
-		common.IsErr(err, "Error loading .ini file")
+		common.IsErr(err, true, "Error loading .ini file")
 		isIniInitOnce = true
 	} else {
 		println("initialized inis once")
